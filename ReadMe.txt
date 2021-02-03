@@ -35,3 +35,6 @@
 
 	2.4 UnitOfWork klasörü açýlýr.
 		2.4.1 IUnitOfWork.cs arayüzü açýlýr.  Bu arayüzde Unit Of Work desenine dahil etmek istediðimiz Repository'leri ekliyoruz.
+
+
+3-TwitterProject.Infrastructure adýnda Class Library(.Core) Projesi açýlýr.
