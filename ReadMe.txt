@@ -24,4 +24,9 @@
 
 	2.3 Repositories klasörü açýlýr. Projede temel anlamda CRUD operasyonlarýný yürüteceðim methodlarý asenkron programing'e uygun þekilde oluþturacaðým.
 		2.3.1 BaseRepo klsörü açýlýr içine IRepository interfaces eklenir.
+		Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
+		Not: GenericRepository Pattern, DIP kullanacaðýmýz için her Concrete sýnýf için Repository açacaðýz.
+		2.3.2 EntityTypeRepo klasörü açýlýr.
+			
+
 
