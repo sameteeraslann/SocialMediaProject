@@ -4,7 +4,6 @@
 2- TwitterProject.Domain adýnda Class Library(.Core) Projesi açýlýr.
 	2.1 Enums klasörü açýlýr.
 		2.1.1 Bu klasör altýna Status.cs açýlýr.
-
 	 
 	2.2 Entities klasrü açýlýr. 
 		2.2.1 Interface klasörü açýlýr ve bu klasör altýna IBaseEntity.cs interface'si açýlýr.
@@ -34,4 +33,5 @@
 			2.3.2.5 IShareRepository
 			2.3.2.6 ITweetRepository
 
-
+	2.4 UnitOfWork klasörü açýlýr.
+		2.4.1 IUnitOfWork.cs arayüzü açýlýr.
