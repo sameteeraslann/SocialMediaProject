@@ -27,6 +27,11 @@
 		Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
 		Not: GenericRepository Pattern, DIP kullanacaðýmýz için her Concrete sýnýf için Repository açacaðýz.
 		2.3.2 EntityTypeRepo klasörü açýlýr.
-			
+			2.3.2.1
+			2.3.2.2
+			2.3.2.3
+			2.3.2.4
+			2.3.2.5
+			2.3.2.6
 
 
