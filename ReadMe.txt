@@ -22,3 +22,6 @@
 			2.2.2.7 Share.cs açýlýr.
 			2.2.2.8 Tweet.cs açýlýr.
 
+	2.3 Repositories klasörü açýlýr. Projede temel anlamda CRUD operasyonlarýný yürüteceðim methodlarý asenkron programing'e uygun þekilde oluþturacaðým.
+		2.3.1 BaseRepo klsörü açýlýr içine IRepository interfaces eklenir.
+
