@@ -34,4 +34,4 @@
 			2.3.2.6 ITweetRepository
 
 	2.4 UnitOfWork klasörü açýlýr.
-		2.4.1 IUnitOfWork.cs arayüzü açýlýr.
+		2.4.1 IUnitOfWork.cs arayüzü açýlýr.  Bu arayüzde Unit Of Work desenine dahil etmek istediðimiz Repository'leri ekliyoruz.
