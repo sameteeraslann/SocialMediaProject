@@ -8,7 +8,7 @@ using TwitterProject.Infrastructure.Mapping.Concrete;
 
 namespace TwitterProject.Infrastructure.Context
 {
-    public class ApplicationDbContext: IdentityDbContext<AppUser,AppRole,int>
+    public class ApplicationDbContext: IdentityDbContext<AppUser,AppRole,int> // => IdentityUser kütüphanesini kullandığımız için "IdentityDbContext" bağlantısını çağırdık. Şayet IdentityUser kullanmasaydık "DbContext" bağlantısını çağırmamız gerekiyordu. 
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options){} // =>  "DB bağlantısını concructor method ile oluşturuldu."
 
