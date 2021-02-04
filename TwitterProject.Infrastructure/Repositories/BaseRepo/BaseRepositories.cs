@@ -51,7 +51,7 @@ namespace TwitterProject.Infrastructure.Repositories.BaseRepo
             if (include != null) query = include(query); // => include edilen nesneleri query'e attık.
             if (expression != null) query = query.Where(expression); // expression ile gelenlere linqto sorgusu yazılması için Where sorgusunu query' e attık.
             if (orderby != null) return await orderby(query).Select(selector).FirstOrDefaultAsync(); // => gelen orderby sorgusu dolu ise bu şart çalışsın
-            else return await query.Select(selector).FirstOrDefaultAsync(); //=> null geliyorsa burasy çalışsın
+            else return await query.Select(selector).FirstOrDefaultAsync(); //=> null geliyorsa buraya çalışsın
 
         }
 
