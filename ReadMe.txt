@@ -62,7 +62,7 @@
 		NOT: Microsoft.AspNetCore.Identity.EntityFrameWork.Core (5.0.2) Nuget Package Manager'den yüklenir.
 
 
-	3.2 Repositories Klaösür açýlýr. Burada Domain kýsmýnda oluþturduðumuz Generic Repository'lere gövde kazandýracaðýz.
+	3.4 Repositories Klaösür açýlýr. Burada Domain kýsmýnda oluþturduðumuz Generic Repository'lere gövde kazandýracaðýz.
 		Not: GenericRepository ile ilgili daha fazla bilgi almak isterseniz bknz https://samettteraslan.gitbook.io/desing-patterns/
 
 
