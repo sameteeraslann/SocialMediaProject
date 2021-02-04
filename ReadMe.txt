@@ -26,15 +26,20 @@
 		Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
 		Not: GenericRepository Pattern, DIP kullanacaðýmýz için her Concrete sýnýf için Repository açacaðýz.
 		2.3.2 EntityTypeRepo klasörü açýlýr.
-			2.3.2.1 IAppUserRepository açýld.
-			2.3.2.2 IFollowRepository
-			2.3.2.3 ILikeRepository
-			2.3.2.4 IMentionRepository
-			2.3.2.5 IShareRepository
-			2.3.2.6 ITweetRepository
+			2.3.2.1 IAppUserRepository açýlýr.
+			2.3.2.2 IFollowRepository açýlýr.
+			2.3.2.3 ILikeRepository açýlýr.
+			2.3.2.4 IMentionRepository açýlýr.
+			2.3.2.5 IShareRepository açýlýr.
+			2.3.2.6 ITweetRepository açýlýr.
 
 	2.4 UnitOfWork klasörü açýlýr.
 		2.4.1 IUnitOfWork.cs arayüzü açýlýr.  Bu arayüzde Unit Of Work desenine dahil etmek istediðimiz Repository'leri ekliyoruz.
 
 
 3-TwitterProject.Infrastructure adýnda Class Library(.Core) Projesi açýlýr.
+	Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
+	Not: Referanslara TwitterProject.Domain katmaný eklenir.
+
+	3.1 Abstract klasörü açýlýr.
+		3.2 BaseMap.cs eklenir ve abstract olarak iþaretlenir.
