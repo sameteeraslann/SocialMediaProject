@@ -42,14 +42,27 @@
 	Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
 	Not: Referanslara TwitterProject.Domain katmaný eklenir.
 
-	3.1 Abstract klasörü eklenir.
-		3.1.2 BaseMap.cs eklenir ve abstract olarak iþaretlenir.
+	3.2 Mapping Klasörü Açýlýr.
 
-	3.2 Concrete klasörü eklenir.
-		3.2.1 AppRoleMap.cs açýlýr.
-		3.2.2 AppUserMap.cs açýlýr.
-		3.2.3 FollowMap.cs açýlýr.
-		3.2.4 LikeMap.cs açýlýr.
-		3.2.5 MentionMap.cs açýlýr.
-		3.2.6 ShareMap.cs açýlýr.
-		3.2.7 TweetMap.cs açýlýr.
+		3.2.1 Abstract klasörü eklenir.
+			3.1.1.1 BaseMap.cs eklenir ve abstract olarak iþaretlenir.
+
+		3.2.2 Concrete klasörü eklenir.
+			3.2.2.1 AppRoleMap.cs açýlýr.
+			3.2.2.2 AppUserMap.cs açýlýr.
+			3.2.2.3 FollowMap.cs açýlýr.
+			3.2.2.4 LikeMap.cs açýlýr.
+			3.2.2.5 MentionMap.cs açýlýr.
+			3.2.2.6 ShareMap.cs açýlýr.
+			3.2.2.7 TweetMap.cs açýlýr.
+	
+	3.3 Context klasörü açýlýr.
+		3.3.1 ApplicationDbContext.cs açýlýr. CodeFirst ile ayaða kaldýracaðýmýz projenýn tablolarýný DbSet edeceðiz ve Mapping içerisinde yapmýþ olduðumuz Map'leme iþlemlerini override edeceðiz.
+
+		NOT: Microsoft.AspNetCore.Identity.EntityFrameWork.Core (5.0.2) Nuget Package Manager'den yüklenir.
+
+
+	3.2 Repositories Klaösür açýlýr. Burada Domain kýsmýnda oluþturduðumuz Generic Repository'lere gövde kazandýracaðýz.
+		Not: GenericRepository ile ilgili daha fazla bilgi almak isterseniz bknz https://samettteraslan.gitbook.io/desing-patterns/
+
+
