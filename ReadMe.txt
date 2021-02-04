@@ -38,8 +38,18 @@
 
 
 3-TwitterProject.Infrastructure adýnda Class Library(.Core) Projesi açýlýr.
+
 	Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
 	Not: Referanslara TwitterProject.Domain katmaný eklenir.
 
-	3.1 Abstract klasörü açýlýr.
-		3.2 BaseMap.cs eklenir ve abstract olarak iþaretlenir.
+	3.1 Abstract klasörü eklenir.
+		3.1.2 BaseMap.cs eklenir ve abstract olarak iþaretlenir.
+
+	3.2 Concrete klasörü eklenir.
+		3.2.1 AppRoleMap.cs açýlýr.
+		3.2.2 AppUserMap.cs açýlýr.
+		3.2.3 FollowMap.cs açýlýr.
+		3.2.4 LikeMap.cs açýlýr.
+		3.2.5 MentionMap.cs açýlýr.
+		3.2.6 ShareMap.cs açýlýr.
+		3.2.7 TweetMap.cs açýlýr.
