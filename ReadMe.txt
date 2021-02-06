@@ -77,3 +77,4 @@
 		Not: UnitOfWork ile ilgili daha fazla bilgi için bknz https://samettteraslan.gitbook.io/desing-patterns/
 
 
+4-TwitterProject.Application Katmaný açýlýr.
