@@ -12,7 +12,11 @@ namespace TwitterProject.Infrastructure.UnitOfWork
     public class UnitOfWork : IUnitOfWork // => IUnitOfWork'den implement yolu ile gövdelendireceğim methodlarımı aldım.
     {
         private readonly ApplicationDbContext _db;
-        public UnitOfWork(ApplicationDbContext db) => this._db = db ?? throw new ArgumentNullException("Database Can Not To Be Null..!"); //=> ??= Karar mekanizmasını başlattık. Bu karar mekanizması ya bize db bağlantısını verecek ya da ArgumentNullException ile hata mesajımı gönderecektir.
+        public UnitOfWork(ApplicationDbContext db)
+        { 
+             this._db = db ?? throw new ArgumentNullException("Database Can Not To Be Null..!");
+        }
+        //=> ??= Karar mekanizmasını başlattık. Bu karar mekanizması ya bize db bağlantısını verecek ya da ArgumentNullException ile hata mesajımı gönderecektir.
 
         private IAppUserRepository _appRepository;
         public IAppUserRepository AppUserRepository

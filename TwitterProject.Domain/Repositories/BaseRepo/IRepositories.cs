@@ -10,6 +10,7 @@ using TwitterProject.Domain.Entities.Interface;
 
 namespace TwitterProject.Domain.Repositories.BaseRepo
 {
+    // Repository: Temel olarak veritabanı sorgulama işlemlerinin bir merkezsen yapılmasını sağlayarak iş katmamına bu işlererin taşınmasını önler bu şekilde sorgu ve kod tekrarını engelleriz.
     public interface IRepository<T> where T : class, IBaseEntity
     {
         Task<List<T>> GetAll();

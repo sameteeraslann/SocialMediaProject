@@ -78,3 +78,11 @@
 
 
 4-TwitterProject.Application Katmaný açýlýr.
+		NOT: Microsoft.AspNet.Core.Http.Features (5.0.2) Nuget Package Manager'den yüklenir.
+
+	4.1 Models klasörü eklenir.
+		4.1.2 DTOs klasörü eklenir.
+			4.1.2.3
+
+
+
