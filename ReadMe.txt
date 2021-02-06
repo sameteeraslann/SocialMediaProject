@@ -82,7 +82,15 @@
 
 	4.1 Models klasörü eklenir.
 		4.1.2 DTOs klasörü eklenir.
-			4.1.2.3
+			4.1.2.1 AddMentionDTO açýldý.
+			4.1.2.2 AddTweetDTO açýldý.
+			4.1.2.3 EditProfileDTO açýldý.
+			4.1.2.4 FollowDTO açýldý.
+			4.1.2.5 LikeDTO açýldý.
+			4.1.2.6 LoginDTO açýldý.
+			4.1.2.7 ProfileSummaryDTO açýldý.
+			4.1.2.8 RegisterDTO açýldý.
+
 
 
 
