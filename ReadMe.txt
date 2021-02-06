@@ -63,6 +63,17 @@
 
 
 	3.4 Repositories Klaösür açýlýr. Burada Domain kýsmýnda oluþturduðumuz Generic Repository'lere gövde kazandýracaðýz.
-		Not: GenericRepository ile ilgili daha fazla bilgi almak isterseniz bknz https://samettteraslan.gitbook.io/desing-patterns/
+		Not: GenericRepository ile ilgili daha fazla bilgi için bknz https://samettteraslan.gitbook.io/desing-patterns/
+
+		3.4.1 AppUserRepository açýldý.
+		3.4.2 FollowRepository açýldý.
+		3.4.3 LikeRepository açýldý.
+		3.4.4 MentionRepository açýldý.
+		3.4.5 ShareRepository açýldý.
+		3.4.6 TweetRepository açýldý.
+
+	3.5 UnitOfWork Klasörü açýlýr.
+		3.5.1 UnitOfWork.cs eklenir. Burada TwitterProject.Domain katmanýnda oluþturduðumuz UnitOfWork methodlarýný gövdelendireceðiz.
+		Not: UnitOfWork ile ilgili daha fazla bilgi için bknz https://samettteraslan.gitbook.io/desing-patterns/
 
 
