@@ -5,16 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\VMs\" />
     <Folder Include="DependencInjection\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Services\Concretes\" />
     <Folder Include="Validations\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.2" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TwitterProject.Domain\TwitterProject.Domain.csproj" />
+    <ProjectReference Include="..\TwitterProject.Infrastructure\TwitterProject.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

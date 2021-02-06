@@ -91,6 +91,16 @@
 			4.1.2.7 ProfileSummaryDTO açýldý.
 			4.1.2.8 RegisterDTO açýldý.
 
+	4.2 AutoMapper yapmak için Mapper klasörü açýlýr ve altýna Mapping.cs adýnda sýnýf eklendir.
+
+		NOT: AutoMapper Nuget Package Manager'den yüklenir.
+		NOT: AutoMapper Microsoft.DependencyInjection 8.1.1 Nuget Package Manager'den yüklenir.
+
+
+				// AutoMapper Link Ekle//
+
+	4.3 Services klasörü açýlýr.
+		
 
 
 
