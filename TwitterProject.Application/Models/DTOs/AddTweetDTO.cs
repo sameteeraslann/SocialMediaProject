@@ -11,6 +11,6 @@ namespace TwitterProject.Application.Models.DTOs
         public string Text { get; set; }
         public string ImagePath { get; set; }
         public int AppUserId { get; set; }
-        public IFormFile MyProperty { get; set; }
+        public IFormFile Image { get; set; }
     }
 }
