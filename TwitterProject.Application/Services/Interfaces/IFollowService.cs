@@ -6,7 +6,7 @@ using TwitterProject.Application.Models.DTOs;
 
 namespace TwitterProject.Application.Services.Interfaces
 {
-    public interface IFollowServices
+    public interface IFollowService
     {
         Task Follow(FollowDTO followDTO);
         Task UnFollow(FollowDTO followDTO);

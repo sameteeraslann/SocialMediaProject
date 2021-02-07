@@ -15,19 +15,19 @@ using TwitterProject.Domain.UnitOfWork;
 
 namespace TwitterProject.Application.Services.Concretes
 {
-    public class AppUserService : IAppUserServices
+    public class AppUserService : IAppUserService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IFollowServices _followService;
+        private readonly IFollowService _followService;
 
         public AppUserService(IUnitOfWork unitOfWork,
                               IMapper mapper,
                               UserManager<AppUser> userManager,
                               SignInManager<AppUser> signInManager,
-                              IFollowServices followService)
+                              IFollowService followService)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;

@@ -8,7 +8,7 @@ using TwitterProject.Application.Models.VMs;
 
 namespace TwitterProject.Application.Services.Interfaces
 {
-    public interface IAppUserServices
+    public interface IAppUserService
     {
         Task DeleteUser(params object[] parameters);
         Task<IdentityResult> Register(RegisterDTO registerDTO);

@@ -10,7 +10,7 @@ using TwitterProject.Domain.UnitOfWork;
 
 namespace TwitterProject.Application.Services.Concretes
 {
-    public class FollowService : IFollowServices
+    public class FollowService : IFollowService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
