@@ -2,7 +2,11 @@
 1- TwitterProject adýnda BlankSolution açýlýr
 
 2- TwitterProject.Domain adýnda Class Library(.Core) Projesi açýlýr.
+	
+	Domain : Fonksiyonelite açýsýndan zengin domain in kolay anlaþýlabilir bir modelidir.Repositoryler ve factory ler bu katmanýn birer üyeleri olarak kabul edilseler de coðu ORM araçlarý tarafýndan altyapý katmanýna ait üyeler olarak kabul görmektedirler.
+
 	2.1 Enums klasörü açýlýr.
+
 		2.1.1 Bu klasör altýna Status.cs açýlýr.
 	 
 	2.2 Entities klasrü açýlýr. 
@@ -12,6 +16,7 @@
 			2.2.2.1 Child sýnýflara kalýtým vermek amaçlý BaseEntity.cs açýlýr, abstract olarak iþaretlenir, IBaseEntity'den implement alýnýr ve IBaseEntity'de yazdýðýmýz propertyler burada gövde kazanýr.
 
             2.2.2.2 AppRole.cs açýlýr.
+
             Not: Kullanýcý ile ilgili iþlemlerde Asp .Net Core Identity sýnýfýndan yararlanacaðým. Bu baðlamda AppUserRole ve AppUser sýnýflarýnda Identity sýnýfdan kalýtým alacaklar. Bunu için Microsoft.Extensions.Identity.Store paketini yükleyeceðiz.
 
             2.2.2.3 AppUser.cs açýlýr.
@@ -38,6 +43,7 @@
 
 
 3-TwitterProject.Infrastructure adýnda Class Library(.Core) Projesi açýlýr.
+       Infrastructure: Teknolojiye özel kararlara odaklanýlýr amaçtan ziyade implementasyon kýsmý ile ilgilenilir.Bu katmanda domainlerin instancelarý yaratýlabilir.Ancan genellikle repositoryler bu katmanda etkileþim içerisinde olurlar.
 
 	Not: Microsoft.EntityFremeworkCore(5.0.2) Nuget Package Manager'den yüklenir.
 	Not: Referanslara TwitterProject.Domain katmaný eklenir.
@@ -100,6 +106,8 @@
 				// AutoMapper Link Ekle//
 
 	4.3 Services klasörü açýlýr.
+
+	NOT: Microsoft.AspNet.Core.Identity (2.2.0) Nuget Package Manager'den yüklenir.
 		
 
 

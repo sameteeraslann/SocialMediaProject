@@ -37,8 +37,8 @@ namespace TwitterProject.Infrastructure.Repositories.BaseRepo
 
         public async Task<T> GetById(int id) => await _table.FindAsync(id);
 
-        public async Task<TResult> GetFilteredFirstOrDefault<TResult>(Expression<Func<T, TResult>> selector,
-                                                             Expression<Func<T, bool>> expression = null,
+        public async Task<TResult> GetFilteredFirstOrDefault<TResult>(Expression<Func<T, TResult>> selector,// selector => ilk parametre entity tipinde olacak ikinci aldığı parametre ise dönüş tipinde TResult olacaktır.
+                                                             Expression<Func<T, bool>> expression = null,// expression => İlk parametredeki verinin bool tipinde dönmesi için bize yardımcı olacak.
                                                              Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null,  
                                                              Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
                                                              bool disableTracking = true)
