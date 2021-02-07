@@ -102,12 +102,31 @@
 		NOT: AutoMapper Nuget Package Manager'den yüklenir.
 		NOT: AutoMapper Microsoft.DependencyInjection 8.1.1 Nuget Package Manager'den yüklenir.
 
-
-				// AutoMapper Link Ekle//
+		NOT: AUTOMAPPER için daha fazla bilgi için https://samettteraslan.gitbook.io/object-operations/
+				
 
 	4.3 Services klasörü açýlýr.
 
 	NOT: Microsoft.AspNet.Core.Identity (2.2.0) Nuget Package Manager'den yüklenir.
+
+		4.3.1 Interfaces klasörü açýlýr.
+			4.3.1.1 IAppUserService açýlýr.
+			4.3.1.2 IFollowService açýlýr.
+			4.3.1.3 ILikeService açýlýr.
+			4.3.1.4 IMentionService açýlýr.
+			4.3.1.5 ITweetService açýlýr.
+			
+		4.3.2 Concrete klaösür açýlýr.
+			4.3.2.1 AppUserService açýlýr.
+			4.3.2.2 FollowService açýlýr.
+			4.3.2.3 LikeService açýlýr.
+			4.3.2.4 MentionService açýlýr.
+			4.3.2.5 TweetService açýlýr.
+
+	4.4 IoC klaösürü açýlýr ve altýna DepencyInjection.cs eklenir.
+		
+
+
 		
 
 
