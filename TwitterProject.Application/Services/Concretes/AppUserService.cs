@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System;
@@ -20,13 +21,13 @@ namespace TwitterProject.Application.Services.Concretes
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IFollowService _followService;
+        private readonly IFollowServices _followService;
 
         public AppUserService(IUnitOfWork unitOfWork,
                               IMapper mapper,
                               UserManager<AppUser> userManager,
                               SignInManager<AppUser> signInManager,
-                              IFollowService followService)
+                              IFollowServices followService)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
@@ -132,9 +133,23 @@ namespace TwitterProject.Application.Services.Concretes
             return result;
         }
 
-        public Task<List<FollowListVM>> UsersFollowers(int id, int pageIndex)
+        public async Task<List<FollowListVM>> UsersFollowers(int id, int pageIndex)
         {
-            throw new NotImplementedException();
+            List<int> followers = await _followService.Followers(id);
+
+            var followerList = await _unitOfWork.AppUserRepository.GetFilteredList(
+                selector: x => new FollowListVM
+                {
+                    Id = x.Id,
+                    ImagePath = x.ImagePath,
+                    UserName = x.UserName,
+                    Name = x.Name
+                },
+                expression: x=> followers.Contains(x.Id),
+                include: x=> x.Include(x=> x.Followers),
+                pageIndex:pageIndex
+                );
+            return followerList;
         }
 
         public Task<List<FollowListVM>> UsersFollowings(int id, int pageIndex)
