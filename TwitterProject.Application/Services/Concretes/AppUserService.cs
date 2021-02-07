@@ -152,9 +152,24 @@ namespace TwitterProject.Application.Services.Concretes
             return followerList;
         }
 
-        public Task<List<FollowListVM>> UsersFollowings(int id, int pageIndex)
+        public async Task<List<FollowListVM>> UsersFollowings(int id, int pageIndex)
         {
-            throw new NotImplementedException();
+            List<int> following = await _followService.Followings(id);
+
+            var followingList = await _unitOfWork.AppUserRepository.GetFilteredList(
+                selector: x => new FollowListVM
+                {
+                    Id = x.Id,
+                    ImagePath = x.ImagePath,
+                    UserName = x.UserName,
+                    Name = x.Name
+                },
+                expression: x => following.Contains(x.Id),
+                include: x => x.Include(x => x.Followers),
+                pageIndex: pageIndex
+                );
+            return followingList;
+
         }
     }
 }
