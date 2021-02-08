@@ -1,10 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using TwitterProject.Application.Mapper;
+using TwitterProject.Application.Models.DTOs;
 using TwitterProject.Application.Services.Concretes;
 using TwitterProject.Application.Services.Interfaces;
+using TwitterProject.Application.Validations;
 using TwitterProject.Domain.Entities.Concrete;
 using TwitterProject.Domain.UnitOfWork;
 using TwitterProject.Infrastructure.Context;
@@ -24,6 +27,11 @@ namespace TwitterProject.Application.IoC
             services.AddScoped<ILikeService, LikeService>();
             services.AddScoped<IMentionService, MentionService>();
             services.AddScoped<ITweetService, TweetService>();
+
+            //Validation Resolver
+            services.AddTransient<IValidator<RegisterDTO>, RegisterValidation>();
+            services.AddTransient<IValidator<LoginDTO>, LoginValidation>();
+            services.AddTransient<IValidator<AddTweetDTO>, TweetValidation>();
 
             services.AddIdentity<AppUser, AppRole>(x => //bağımlı olan sınıflarımızı register ettik sonrada resolve ediyoruz. ayarlarınıda manage ettik.
             {
