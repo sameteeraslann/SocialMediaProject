@@ -124,6 +124,11 @@
 			4.3.2.5 TweetService açýlýr.
 
 	4.4 IoC klaösürü açýlýr ve altýna DepencyInjection.cs eklenir.
+
+
+
+
+	FluentValidation yüklenir.
 		
 
 
