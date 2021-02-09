@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterProject.Application.IoC;
 using TwitterProject.Infrastructure.Context;
 
 namespace TwitterProject.Presentation
@@ -26,7 +27,7 @@ namespace TwitterProject.Presentation
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.RegisterServices();
+            services.RegisterService();
 
             services.AddControllersWithViews();
 
