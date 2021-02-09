@@ -30,9 +30,14 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="row">
+            <div class="col-sm-3">
+                @await Html.PartialAsync("_LeftSideBarPartial")
+            </div>
+            <div class="col-sm-9">
+                @RenderBody()
+            </div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

@@ -10,6 +10,6 @@ namespace TwitterProject.Application.Models.DTOs
         public string Password { get; set; }
 
         //Remember me
-        //public bool Rememberme { get; set; }
+        public bool Rememberme { get; set; }
     }
 }
