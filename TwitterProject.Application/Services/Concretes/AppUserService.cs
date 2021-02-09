@@ -36,7 +36,7 @@ namespace TwitterProject.Application.Services.Concretes
             this._followService = followService;
         }
 
-        public async Task DeleteUser(params object[] parameters) => await _unitOfWork.ExecuteSqlRaw("spDeleteUsers {0}", parameters);
+        public async Task DeleteUser(params object[] parameters) => await _unitOfWork.ExecuteSqlRaw($"spDeleteUsers {0}", parameters);
         // params object[] => Değişken türü belli olmayan durumlarda C# içerisindeki her şeyin object türünden türediği özelliği kullanılabilir.
 
 
@@ -50,34 +50,44 @@ namespace TwitterProject.Application.Services.Concretes
                 {
                     using var image = Image.Load(editProfileDTO.Image.OpenReadStream());
                     image.Mutate(x => x.Resize(256, 256));
-                    image.Save("wwwroot/images/users" + Guid.NewGuid().ToString() + ".jpg");
-                    user.ImagePath = ("/images/users" + Guid.NewGuid().ToString() + ".jpg");
+                    image.Save("wwwroot/images/users" + ".jpg");
+                    user.ImagePath = ("/images/users" + ".jpg");
+                    //image.Save("wwwroot/images/users" + Guid.NewGuid().ToString() + ".jpg");
+                    //user.ImagePath = ("/images/users" + Guid.NewGuid().ToString() + ".jpg");
                 }
                 if (editProfileDTO.Password != null)
                 {
                     user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, editProfileDTO.Password);
-                    await _userManager.UpdateAsync(user);
+                    //await _userManager.UpdateAsync(user);
                 }
                 if (editProfileDTO.UserName != null)
                 {
-                    var isUserNameExsist = _userManager.FindByNameAsync(editProfileDTO.UserName);
-                    if (isUserNameExsist == null)
-                    {
-                        await _userManager.SetUserNameAsync(user, editProfileDTO.UserName);
-                    }
+                    //var isUserNameExsist = _userManager.FindByNameAsync(editProfileDTO.UserName);
+                    //if (isUserNameExsist == null)
+                    //{
+                    await _userManager.SetUserNameAsync(user, editProfileDTO.UserName);
+                    user.UserName = editProfileDTO.UserName;
+                    //await _userManager.UpdateAsync(user);
+                    //}
                 }
                 if (editProfileDTO.Email != null)
                 {
-                    var isEmailExsist = _userManager.FindByEmailAsync(editProfileDTO.Email);
-                    if (isEmailExsist == null)
+                    //    var isEmailExsist = _userManager.FindByEmailAsync(editProfileDTO.Email);
+                    //    if (isEmailExsist == null)
+                    //    {
+                    var isEmailExist = _unitOfWork.AppUserRepository.FirstOrDefault(x=>x.Email == editProfileDTO.Email);
+                    if (isEmailExist == null)
                     {
                         await _userManager.SetEmailAsync(user, editProfileDTO.Email);
+                        user.Email = editProfileDTO.Email;
                     }
+                   
                 }
                 if (editProfileDTO.Name != null)
                 {
                     user.Name = editProfileDTO.Name;
                 }
+                _unitOfWork.AppUserRepository.Update(user);
                 await _unitOfWork.Commit();
             }
         }
@@ -101,8 +111,8 @@ namespace TwitterProject.Application.Services.Concretes
                     FollowerCount = x.Followers.Count,
                     FollowingCount = x.Followings.Count
                 },
-                expression: x=> x.UserName == userName);
-                return user;
+                expression: x => x.UserName == userName);
+            return user;
         }
 
         public async Task<int> GetUserIdFromName(string name)
@@ -146,9 +156,9 @@ namespace TwitterProject.Application.Services.Concretes
                     UserName = x.UserName,
                     Name = x.Name
                 },
-                expression: x=> followers.Contains(x.Id),
-                include: x=> x.Include(x=> x.Followers),
-                pageIndex:pageIndex
+                expression: x => followers.Contains(x.Id),
+                include: x => x.Include(x => x.Followers),
+                pageIndex: pageIndex
                 );
             return followerList;
         }
@@ -174,3 +184,6 @@ namespace TwitterProject.Application.Services.Concretes
         }
     }
 }
+
+
+

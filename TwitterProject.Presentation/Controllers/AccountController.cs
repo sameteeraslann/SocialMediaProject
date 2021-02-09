@@ -99,10 +99,10 @@ namespace TwitterProject.Presentation.Controllers
         [HttpPost]
         public async Task <IActionResult> EditProfile (EditProfileDTO editProfileDTO,IFormFile file)
         {
-            editProfileDTO.Image = file;
+            //editProfileDTO.Image = file;
 
-            await _appUserService.EditUser(editProfileDTO);
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+             await _appUserService.EditUser(editProfileDTO);
+             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         #endregion
