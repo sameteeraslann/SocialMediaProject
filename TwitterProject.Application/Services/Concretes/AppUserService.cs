@@ -78,6 +78,7 @@ namespace TwitterProject.Application.Services.Concretes
                 {
                     user.Name = editProfileDTO.Name;
                 }
+                await _unitOfWork.Commit();
             }
         }
 
