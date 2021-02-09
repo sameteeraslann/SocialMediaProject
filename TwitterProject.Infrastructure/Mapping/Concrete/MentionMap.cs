@@ -12,7 +12,9 @@ namespace TwitterProject.Infrastructure.Mapping.Concrete
         public override void Configure(EntityTypeBuilder<Mention> builder)
         {
             builder.HasKey(x => new { x.Id, x.AppUserId, x.TweetId });
+
             builder.Property(x => x.Text).IsRequired(false);
+
             base.Configure(builder);
         }
     }
