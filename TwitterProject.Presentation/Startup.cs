@@ -26,8 +26,11 @@ namespace TwitterProject.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+
             services.AddMemoryCache();
+
             services.AddSession();
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.RegisterService();
