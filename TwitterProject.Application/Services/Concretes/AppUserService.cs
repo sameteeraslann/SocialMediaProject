@@ -62,26 +62,23 @@ namespace TwitterProject.Application.Services.Concretes
                 }
                 if (editProfileDTO.UserName != null)
                 {
-                    //var isUserNameExsist = _userManager.FindByNameAsync(editProfileDTO.UserName);
-                    //if (isUserNameExsist == null)
-                    //{
-                    await _userManager.SetUserNameAsync(user, editProfileDTO.UserName);
-                    user.UserName = editProfileDTO.UserName;
-                    //await _userManager.UpdateAsync(user);
-                    //}
+                    var isUserNameExsist = _unitOfWork.AppUserRepository.FirstOrDefault(x => x.UserName == editProfileDTO.UserName);
+                    if (isUserNameExsist == null)
+                    {
+                        await _userManager.SetUserNameAsync(user, editProfileDTO.UserName);
+                        user.UserName = editProfileDTO.UserName;
+                        //await _userManager.UpdateAsync(user);
+                    }
                 }
                 if (editProfileDTO.Email != null)
                 {
-                    //    var isEmailExsist = _userManager.FindByEmailAsync(editProfileDTO.Email);
-                    //    if (isEmailExsist == null)
-                    //    {
-                    var isEmailExist = _unitOfWork.AppUserRepository.FirstOrDefault(x=>x.Email == editProfileDTO.Email);
+                    var isEmailExist = _unitOfWork.AppUserRepository.FirstOrDefault(x => x.Email == editProfileDTO.Email);
                     if (isEmailExist == null)
                     {
                         await _userManager.SetEmailAsync(user, editProfileDTO.Email);
                         user.Email = editProfileDTO.Email;
                     }
-                   
+
                 }
                 if (editProfileDTO.Name != null)
                 {
