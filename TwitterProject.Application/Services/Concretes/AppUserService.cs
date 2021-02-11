@@ -50,8 +50,8 @@ namespace TwitterProject.Application.Services.Concretes
                 {
                     using var image = Image.Load(editProfileDTO.Image.OpenReadStream());
                     image.Mutate(x => x.Resize(256, 256));
-                    image.Save("wwwroot/images/users" + ".jpg");
-                    user.ImagePath = ("/images/users" + ".jpg");
+                    image.Save("wwwroot/images/users" +user.UserName+ ".jpg");
+                    user.ImagePath = ("/images/users" +user.UserName+ ".jpg");
                     //image.Save("wwwroot/images/users" + Guid.NewGuid().ToString() + ".jpg");
                     //user.ImagePath = ("/images/users" + Guid.NewGuid().ToString() + ".jpg");
                 }
