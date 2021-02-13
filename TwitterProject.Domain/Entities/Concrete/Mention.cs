@@ -6,7 +6,7 @@ using TwitterProject.Domain.Enums;
 
 namespace TwitterProject.Domain.Entities.Concrete
 {
-    public class Mention : BaseEntity<int>
+    public class Mention :BaseEntity<int>
     {
         public string Text { get; set; }
 

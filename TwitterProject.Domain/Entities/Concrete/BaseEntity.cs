@@ -18,5 +18,6 @@ namespace TwitterProject.Domain.Entities.Concrete
 
         private Status _status = Status.Active;
         public Status Status { get => _status; set => value = _status; }
+
     }
 }

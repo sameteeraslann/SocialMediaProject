@@ -7,7 +7,7 @@ using TwitterProject.Domain.Enums;
 
 namespace TwitterProject.Domain.Entities.Concrete
 {
-    public class Follow : IBaseEntity
+    public class Follow : BaseEntity<int>
     {
         public int FollowerId { get; set; }
         [ForeignKey("FollowerId"), InverseProperty("Followers")]
@@ -18,13 +18,5 @@ namespace TwitterProject.Domain.Entities.Concrete
         public AppUser Following { get; set; }
 
 
-        private DateTime _createDate = DateTime.Now;
-        public DateTime CreateDate { get => _createDate; set => value = _createDate; }
-
-        public DateTime? ModifiedDate { get; set; }
-        public DateTime? DeleteDate { get; set; }
-
-        private Status _status = Status.Active;
-        public Status Status { get => _status; set => value = _status; }
     }
 }
