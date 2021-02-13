@@ -91,7 +91,7 @@ namespace TwitterProject.Application.Services.Concretes
             return tweets;
         }
 
-        public async Task<List<TimeLineVM>> UserTweet(string userName, int pageIndex)
+        public async Task<List<TimeLineVM>> UserTweets(string userName, int pageIndex)
         {
             int user = await _appUserService.GetUserIdFromName(userName);
 

@@ -25,7 +25,7 @@ function loadUserResults(pageIndex, userName, controllerName, actionName) {
 
             var html = "";
             if (result) {
-                $.each(result, function (key, item) {
+                $.each(result, function (key, item) { //each => her birini oku demek
                     html += '<li class="list-group-item"><img src="' + item.ImagePath + '" alt="" width="25" height="25"><a href="/profile/' + item.UserName + '">' + item.UserName + '</li>'
                 });
                 if (pageIndex == 1) {
