@@ -19,7 +19,7 @@ function loadUserResults(pageIndex, userName, controllerName, actionName) {
         type: "POST",
         async: true,
         dataType: "json",
-        data: { userName: userName, pageIndex = pageIndex },
+        data: { userName: userName, pageIndex: pageIndex }, //=> Hata 1 eşittir var burda
         success: function (result) {
             console.log(result);
 

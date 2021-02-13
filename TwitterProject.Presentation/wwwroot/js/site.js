@@ -5,7 +5,7 @@ function Follow(isExist) {
     var model = {
         FollowerId: parseInt($("#FollowerId").val()),
         FollowingId: parseInt($("#FollowingId").val()),
-        isExsist: isExist
+        isExsist: isExsist
     };
 
     $.ajax({
