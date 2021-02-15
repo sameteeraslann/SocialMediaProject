@@ -2,17 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="card">
     <div class="card-body">
-        @*@await Component.InvokeAsync("AddTweet")*@
-    </div>
-
-    <div class="card-body mt-2">
-        <ul class="list-group" id="TweetList"></ul>
+        @await Component.InvokeAsync("AddTweet")
     </div>
 </div>
 
+<ul class="list-group" id="TweetList">
+</ul>
 
-@section Scripts {    @*Burada "s" takısı eksik*@
-    <script src="~/js/get-tweets.js"></script>
-}
+
