@@ -13,36 +13,32 @@ namespace TwitterProject.Presentation.Controllers
     {
         private readonly IFollowService _followService;
 
-        public FollowController(IFollowService followService)
-        {
-            _followService = followService;
-        }
+        public FollowController(IFollowService followService) => this._followService = followService;
 
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Follow(FollowDTO followDTO)
+        public async Task<IActionResult> Follow(FollowDTO model)
         {
-            if (!followDTO.isExsist)
+            if (!model.isExsist)
             {
-                if (followDTO.FollowerId == User.GetUserId())
+                if (model.FollowerId == User.GetUserId())
                 {
-                    await _followService.Follow(followDTO);
+                    await _followService.Follow(model);
                     return Json("Success");
                 }
                 else return Json("Faild");
             }
             else
             {
-                if (followDTO.FollowerId == User.GetUserId())
+                if (model.FollowerId == User.GetUserId())
                 {
-                    await _followService.UnFollow(followDTO);
+                    await _followService.UnFollow(model);
                     return Json("Success");
                 }
                 else return Json("Faild");
 
             }
         }
-
     }
 }

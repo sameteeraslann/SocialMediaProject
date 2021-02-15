@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,33 +11,30 @@ using TwitterProject.Application.Services.Interfaces;
 
 namespace TwitterProject.Presentation.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
-        private readonly IAppUserService _appUserService;
-        public AccountController(IAppUserService appUserService)
-        {
-            _appUserService = appUserService;
-        }
-        #region Register
+        private readonly IAppUserService _userServeice;
+
+        public AccountController(IAppUserService appUserService) => _userServeice = appUserService;
+
+        [AllowAnonymous]
+        #region Registration
         public IActionResult Register()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+            if (User.Identity.IsAuthenticated) return RedirectToAction(nameof(HomeController.Index), "Home");
             return View();
         }
 
-        [HttpPost]
-        public async Task <IActionResult> Register(RegisterDTO registerDTO)
+        [HttpPost, AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
             if (ModelState.IsValid)
             {
-                var result = await _appUserService.Register(registerDTO);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                var result = await _userServeice.Register(registerDTO);
+
+                if (result.Succeeded) return RedirectToAction("Index", "Home");
+
                 foreach (var item in result.Errors) ModelState.AddModelError(string.Empty, item.Description);
             }
 
@@ -45,7 +43,8 @@ namespace TwitterProject.Presentation.Controllers
         #endregion
 
         #region Login
-        public IActionResult Login (string returnUrl = null)
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl = null)
         {
             if (User.Identity.IsAuthenticated) return RedirectToAction(nameof(HomeController.Index), "Home");
 
@@ -53,30 +52,33 @@ namespace TwitterProject.Presentation.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login (LoginDTO loginDTO,string returnUrl)
+        [HttpPost, AllowAnonymous]
+        public async Task<IActionResult> Login(LoginDTO model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                var result = await _appUserService.LogIn(loginDTO);
+                var result = await _userServeice.LogIn(model);
+
                 if (result.Succeeded) return RedirectToLocal(returnUrl);
+
+                ModelState.AddModelError(String.Empty, "Invalid login attempt..!");
             }
+
             return View();
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))  return Redirect(returnUrl);
-            
+            if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
             else return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         #endregion
 
-        #region LogOut
+        #region Logout
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
-            await _appUserService.LogOut();
+            await _userServeice.LogOut();
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
@@ -87,7 +89,7 @@ namespace TwitterProject.Presentation.Controllers
         {
             if (userName == User.Identity.Name)
             {
-                var user = await _appUserService.GetById(User.GetUserId());
+                var user = await _userServeice.GetById(User.GetUserId());
 
                 if (user == null) return NotFound();
 
@@ -97,14 +99,12 @@ namespace TwitterProject.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> EditProfile (EditProfileDTO editProfileDTO,IFormFile file)
+        public async Task<IActionResult> EditProfile(EditProfileDTO model, IFormFile file)
         {
-            //editProfileDTO.Image = file;
-
-             await _appUserService.EditUser(editProfileDTO);
-             return RedirectToAction(nameof(HomeController.Index), "Home");
+            //model.Image = file;
+            await _userServeice.EditUser(model);
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-
         #endregion
     }
 }

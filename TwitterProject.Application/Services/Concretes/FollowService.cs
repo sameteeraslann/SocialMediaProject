@@ -23,9 +23,9 @@ namespace TwitterProject.Application.Services.Concretes
         }
         public async Task Follow(FollowDTO followDTO)// Böyle bir follow var mı yok mu onu kontrol etti bu follow yoksa follow'ların arasına ekle.
         {
-            var isFollowExsist = await _unitOfWork.FollowRepository.FirstOrDefault(x => x.FollowerId == followDTO.FollowerId);
+            var isFollowExsist = await _unitOfWork.FollowRepository.FirstOrDefault(x => x.FollowerId == followDTO.FollowerId && x.FollowingId == followDTO.FollowingId);
 
-            if(isFollowExsist == null)
+            if (isFollowExsist == null)
             {
                 var follow = _mapper.Map<FollowDTO, Follow>(followDTO);
                 await _unitOfWork.FollowRepository.Add(follow);

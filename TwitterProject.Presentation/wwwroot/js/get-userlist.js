@@ -1,4 +1,4 @@
-﻿import { error } from "jquery";
+﻿
 
 $(document).ready(function () {
     var pageIndex = 1;
@@ -18,15 +18,14 @@ function loadUserResults(pageIndex, userName, controllerName, actionName) {
         url: "/" + controllerName + "/" + actionName,
         type: "POST",
         async: true,
-        dataType: "json",
-        data: { userName: userName, pageIndex: pageIndex }, //=> Hata 1 eşittir var burda
+        dataType: "JSON",
+        data: { userName: userName, pageIndex: pageIndex },
         success: function (result) {
             console.log(result);
-
             var html = "";
             if (result) {
-                $.each(result, function (key, item) { //each => her birini oku demek
-                    html += '<li class="list-group-item"><img src="' + item.ImagePath + '" alt="" width="25" height="25"><a href="/profile/' + item.UserName + '">' + item.UserName + '</li>'
+                $.each(result, function (key, item) { // => each her birini oku
+                    html += '<li class="list-group-item text-dark"><img src="' + item.ImagePath + '" alt="" width="25" height="25"><a href="/profile/' + item.UserName + '">' + item.UserName + '</li>'
                 });
                 if (pageIndex == 1) {
                     $('#UserResult').html(html);
@@ -36,10 +35,9 @@ function loadUserResults(pageIndex, userName, controllerName, actionName) {
                 }
             }
         },
-        error: function (errorMessage) {
-            $('#UserResult').html('<li><p class="text-center">There were not no result found</p></li>')
-        }
-
+        //error: function (errorMessage) {
+        //    $('#UserResult').html('<li><p class="text-center">There were not no result found</p></li>')
+        //}
     });
 }
 

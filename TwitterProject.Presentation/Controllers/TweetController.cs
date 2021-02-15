@@ -34,10 +34,12 @@ namespace TwitterProject.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetTweets(int pageIndex, int pageSize, string userName)
+        public async Task<IActionResult> GetTweets(int pageIndex, int pageSize, string userName = null)
         {
             if (userName == null) return Json(await _tweetService.GetTimeLine(User.GetUserId(), pageIndex), new JsonSerializerSettings());
             else return Json(await _tweetService.UserTweets(userName, pageIndex));
         }
+
+
     }
 }

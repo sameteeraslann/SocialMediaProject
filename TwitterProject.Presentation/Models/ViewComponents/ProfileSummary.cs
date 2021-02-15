@@ -12,6 +12,9 @@ namespace TwitterProject.Presentation.Models.ViewComponents
         private readonly IAppUserService _userService;
         public ProfileSummary(IAppUserService appUserService) => _userService = appUserService;
 
+        //[Route("/ProfileSummary/", Name = "ProfileSummary")]
         public async Task<IViewComponentResult> InvokeAsync(string userName) => View(await _userService.GetByUserName(userName));
     }
 }
+//[Route("/Speaker/EvaluationsCurrent",
+//Name = "speakerevalscurrent")]
