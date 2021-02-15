@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using TwitterProject.Application.Models.DTOs;
 using TwitterProject.Application.Services.Interfaces;
@@ -15,8 +12,7 @@ namespace TwitterProject.Application.Services.Concretes
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public LikeService(IUnitOfWork unitOfWork,
-                           IMapper mapper )
+        public LikeService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
@@ -25,7 +21,6 @@ namespace TwitterProject.Application.Services.Concretes
         public async Task Like(LikeDTO likeDTO)
         {
             var isLiked = await _unitOfWork.LikeRepository.FirstOrDefault(x => x.AppUserId == likeDTO.AppUserId && x.TweetId == likeDTO.TweetId);
-
             if (isLiked == null)
             {
                 var like = _mapper.Map<LikeDTO, Like>(likeDTO);

@@ -24,7 +24,7 @@ function loadUserResults(pageIndex, userName, controllerName, actionName) {
             console.log(result);
             var html = "";
             if (result) {
-                $.each(result, function (key, item) { // => each her birini oku
+                $.each(result, function (key, item) {
                     html += '<li class="list-group-item text-dark"><img src="' + item.ImagePath + '" alt="" width="25" height="25"><a href="/profile/' + item.UserName + '">' + item.UserName + '</li>'
                 });
                 if (pageIndex == 1) {

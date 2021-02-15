@@ -15,12 +15,14 @@ namespace TwitterProject.Application.Services.Interfaces
         Task<SignInResult> LogIn(LoginDTO loginDTO);
         Task LogOut();
 
-        Task<int> GetUserIdFromName(string name); //İsminden kullanıcının Id getir.
+
+        Task<int> GetUserIdFromName(string name);
         Task<EditProfileDTO> GetById(int id);
         Task EditUser(EditProfileDTO editProfileDTO);
         Task<ProfileSummaryDTO> GetByUserName(string userName);
 
         Task<List<FollowListVM>> UsersFollowers(int id, int pageIndex);
         Task<List<FollowListVM>> UsersFollowings(int id, int pageIndex);
+        Task<List<SearchUserDTO>> SearchUser(string keyword, int pageIndex);
     }
 }

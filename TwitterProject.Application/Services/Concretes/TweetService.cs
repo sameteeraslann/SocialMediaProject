@@ -15,22 +15,22 @@ using TwitterProject.Domain.UnitOfWork;
 
 namespace TwitterProject.Application.Services.Concretes
 {
-    public class TweetService: ITweetService
+    public class TweetService : ITweetService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IAppUserService _appUserService;
-        private readonly IFollowService _followservice;
+        private readonly IFollowService _followService;
 
         public TweetService(IUnitOfWork unitOfWork,
-                             IMapper mapper,
+                            IMapper mapper,
                             IAppUserService appUserService,
-                            IFollowService followService)
+                            IFollowService followSerice)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._appUserService = appUserService;
-            this._followservice = followService;
+            this._followService = followSerice;
         }
 
         public async Task AddTweet(AddTweetDTO addTweetDTO)
@@ -42,8 +42,8 @@ namespace TwitterProject.Application.Services.Concretes
                 {
                     image.Mutate(x => x.Resize(256, 256));
                 }
-                image.Save($"wwwroot/images/tweets/" + Guid.NewGuid().ToString() + ".jpg");
-                addTweetDTO.ImagePath = ("/images/tweets/" + Guid.NewGuid().ToString() + ".jpg");
+                image.Save("wwwroot/images/tweets/" + Guid.NewGuid().ToString() + ".jpg");
+                addTweetDTO.ImagePath = ("/images/tweets/" + Guid.NewGuid().ToString() + ".jpg"); ;
             }
 
             var tweet = _mapper.Map<AddTweetDTO, Tweet>(addTweetDTO);
@@ -54,7 +54,8 @@ namespace TwitterProject.Application.Services.Concretes
         public async Task DeleteTweet(int id, int userId)
         {
             var tweet = await _unitOfWork.TweetRepository.FirstOrDefault(x => x.Id == id);
-            if (userId == tweet.Id)
+
+            if (userId == tweet.AppUserId)
             {
                 _unitOfWork.TweetRepository.Delete(tweet);
                 await _unitOfWork.Commit();
@@ -63,7 +64,8 @@ namespace TwitterProject.Application.Services.Concretes
 
         public async Task<List<TimeLineVM>> GetTimeLine(int userId, int pageIndex)
         {
-            List<int> followings = await _followservice.Followings(userId);
+
+            List<int> followings = await _followService.Followings(userId);
 
             var tweets = await _unitOfWork.TweetRepository.GetFilteredList(
                 selector: x => new TimeLineVM
@@ -71,9 +73,9 @@ namespace TwitterProject.Application.Services.Concretes
                     Id = x.Id,
                     Text = x.Text,
                     ImagePath = x.ImagePath,
-                    UserName = x.AppUser.UserName,
                     AppUserId = x.AppUserId,
-                    UserProfilPicture = x.AppUser.ImagePath,
+                    UserName = x.AppUser.UserName,
+                    UserProfilePicture = x.AppUser.ImagePath,
                     CreateDate = x.CreateDate,
                     isLiked = x.Likes.Any(x => x.AppUserId == userId),
                     LikeCount = x.Likes.Count,
@@ -83,10 +85,9 @@ namespace TwitterProject.Application.Services.Concretes
                 expression: x => followings.Contains(userId),
                 orderby: x => x.OrderByDescending(x => x.CreateDate),
                 include: x => x.Include(x => x.AppUser)
-                            .ThenInclude(x => x.Followings)
-                            .Include(x => x.Likes),
-                pageIndex: pageIndex
-                );
+                               .ThenInclude(x => x.Followings)
+                               .Include(x => x.Likes),
+                pageIndex: pageIndex);
 
             return tweets;
         }
@@ -96,30 +97,29 @@ namespace TwitterProject.Application.Services.Concretes
             int user = await _appUserService.GetUserIdFromName(userName);
 
             var tweets = await _unitOfWork.TweetRepository.GetFilteredList(
-               selector: x => new TimeLineVM
-               {
-                   Id = x.Id,
-                   Text = x.Text,
-                   ImagePath = x.ImagePath,
-                   UserName = x.AppUser.UserName,
-                   AppUserId = x.AppUserId,
-                   UserProfilPicture = x.AppUser.ImagePath,
-                   CreateDate = x.CreateDate,
-                   isLiked = x.Likes.Any(x => x.AppUserId == user),
-                   LikeCount = x.Likes.Count,
-                   MentionCount = x.Mentions.Count,
-                   ShareCount = x.Shares.Count
-               },
-               expression: x => x.AppUserId == user,
-               orderby: x => x.OrderByDescending(x => x.CreateDate),
-               include: x => x.Include(x => x.AppUser)
-                           .ThenInclude(x => x.Followings)
-                           .Include(x => x.Likes),
-               pageIndex: pageIndex
-               );
+                selector: x => new TimeLineVM
+                {
+                    Id = x.Id,
+                    Text = x.Text,
+                    ImagePath = x.ImagePath,
+                    AppUserId = x.AppUserId,
+                    UserName = x.AppUser.UserName,
+                    UserProfilePicture = x.AppUser.ImagePath,
+                    CreateDate = x.CreateDate,
+                    isLiked = x.Likes.Any(x => x.AppUserId == user),
+                    LikeCount = x.Likes.Count,
+                    MentionCount = x.Mentions.Count,
+                    ShareCount = x.Shares.Count
+                },
+                expression: x => x.AppUserId == user,
+                orderby: x => x.OrderByDescending(x => x.CreateDate),
+                include: x => x.Include(x => x.AppUser)
+                               .ThenInclude(x => x.Followers)
+                               .Include(x => x.Likes),
+                pageIndex: pageIndex);
 
             return tweets;
         }
     }
-    
+
 }

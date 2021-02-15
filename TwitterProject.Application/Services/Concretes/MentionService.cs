@@ -15,8 +15,7 @@ namespace TwitterProject.Application.Services.Concretes
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MentionService(IUnitOfWork unitOfWork,
-                             IMapper mapper)
+        public MentionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
@@ -28,7 +27,6 @@ namespace TwitterProject.Application.Services.Concretes
 
             await _unitOfWork.MentionRepository.Add(mention);
             await _unitOfWork.Commit();
-
         }
     }
 }

@@ -40,75 +40,75 @@ namespace TwitterProject.Application.Services.Concretes
         // params object[] => Değişken türü belli olmayan durumlarda C# içerisindeki her şeyin object türünden türediği özelliği kullanılabilir.
 
 
-        public async Task EditUser(EditProfileDTO editProfileDTO)
+        public async Task EditUser(EditProfileDTO model)
         {
-            AppUser user = await _unitOfWork.AppUserRepository.GetById(editProfileDTO.Id);
-
+            var user = await _unitOfWork.AppUserRepository.GetById(model.Id);
             if (user != null)
             {
-                if (editProfileDTO.Image != null)
+                if (model.Image != null)
                 {
-                    using var image = Image.Load(editProfileDTO.Image.OpenReadStream());
+                    using var image = Image.Load(model.Image.OpenReadStream());
                     image.Mutate(x => x.Resize(256, 256));
-                    image.Save("wwwroot/images/users" +user.UserName+ ".jpg");
-                    user.ImagePath = ("/images/users" +user.UserName+ ".jpg");
-                    //image.Save("wwwroot/images/users" + Guid.NewGuid().ToString() + ".jpg");
-                    //user.ImagePath = ("/images/users" + Guid.NewGuid().ToString() + ".jpg");
+                    image.Save("wwwroot/images/users/" + user.UserName + ".jpg");
+                    user.ImagePath = ("/images/users/" + user.UserName + ".jpg");
+                    _unitOfWork.AppUserRepository.Update(user);
+                    await _unitOfWork.Commit();
                 }
-                if (editProfileDTO.Password != null)
-                {
-                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, editProfileDTO.Password);
-                    //await _userManager.UpdateAsync(user);
-                }
-                if (editProfileDTO.UserName != null)
-                {
-                    var isUserNameExsist = _unitOfWork.AppUserRepository.FirstOrDefault(x => x.UserName == editProfileDTO.UserName);
-                    if (isUserNameExsist == null)
-                    {
-                        await _userManager.SetUserNameAsync(user, editProfileDTO.UserName);
-                        user.UserName = editProfileDTO.UserName;
-                        //await _userManager.UpdateAsync(user);
-                    }
-                }
-                if (editProfileDTO.Email != null)
-                {
-                    var isEmailExist = _unitOfWork.AppUserRepository.FirstOrDefault(x => x.Email == editProfileDTO.Email);
-                    if (isEmailExist == null)
-                    {
-                        await _userManager.SetEmailAsync(user, editProfileDTO.Email);
-                        user.Email = editProfileDTO.Email;
-                    }
 
-                }
-                if (editProfileDTO.Name != null)
+                if (model.Password != null)
                 {
-                    user.Name = editProfileDTO.Name;
+                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+                    await _userManager.UpdateAsync(user);
                 }
-                _unitOfWork.AppUserRepository.Update(user);
-                await _unitOfWork.Commit();
+                if (model.UserName != user.UserName)
+                {
+                    var isUserNameExist = await _userManager.FindByNameAsync(model.UserName);
+
+                    if (isUserNameExist == null)
+                    {
+                        await _userManager.SetUserNameAsync(user, model.UserName);
+                        user.UserName = model.UserName;
+                        await _signInManager.SignInAsync(user, isPersistent: true);
+                    }
+                }
+                if (model.Name != user.Name)
+                {
+                    user.Name = model.Name;
+                    _unitOfWork.AppUserRepository.Update(user);
+                    await _unitOfWork.Commit();
+                }
+                if (model.Email != user.Email)
+                {
+                    var isEmailExist = await _userManager.FindByEmailAsync(model.Email);
+                    if (isEmailExist == null)
+                        await _userManager.SetEmailAsync(user, model.Email);
+                }
+
             }
         }
 
         public async Task<EditProfileDTO> GetById(int id)
         {
-            AppUser user = await _unitOfWork.AppUserRepository.GetById(id);
+            var user = await _unitOfWork.AppUserRepository.GetById(id);
 
             return _mapper.Map<EditProfileDTO>(user);
         }
 
+
         public async Task<ProfileSummaryDTO> GetByUserName(string userName)
         {
             var user = await _unitOfWork.AppUserRepository.GetFilteredFirstOrDefault(
-                selector: x => new ProfileSummaryDTO
-                {
-                    UserName = x.UserName,
-                    Name = x.Name,
-                    ImagePath = x.ImagePath,
-                    TweetCount = x.Tweets.Count,
-                    FollowerCount = x.Followers.Count,
-                    FollowingCount = x.Followings.Count
-                },
-                expression: x => x.UserName == userName);
+               selector: y => new ProfileSummaryDTO
+               {
+                   UserName = y.UserName,
+                   Name = y.Name,
+                   ImagePath = y.ImagePath,
+                   TweetCount = y.Tweets.Count,
+                   FollowerCount = y.Followers.Count,
+                   FollowingCount = y.Followings.Count
+               },
+               expression: x => x.UserName == userName);
+
             return user;
         }
 
@@ -121,14 +121,17 @@ namespace TwitterProject.Application.Services.Concretes
             return user;
         }
 
-        public async Task<SignInResult> LogIn(LoginDTO loginDTO)
+        public async Task<SignInResult> LogIn(LoginDTO model)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginDTO.UserName, loginDTO.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.Rememberme, false);
 
             return result;
         }
 
-        public async Task LogOut() => await _signInManager.SignOutAsync();
+        public async Task LogOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
 
         public async Task<IdentityResult> Register(RegisterDTO registerDTO)
         {
@@ -140,44 +143,66 @@ namespace TwitterProject.Application.Services.Concretes
 
             return result;
         }
-
-        public async Task<List<FollowListVM>> UsersFollowers(int id, int pageIndex)
+        public async Task<int> UserIdFromName(string userName)
         {
-            List<int> followers = await _followService.Followers(id);
+            var user = await _unitOfWork.AppUserRepository.GetFilteredFirstOrDefault(
+                selector: x => x.Id,
+                expression: x => x.UserName == userName);
 
-            var followerList = await _unitOfWork.AppUserRepository.GetFilteredList(
-                selector: x => new FollowListVM
-                {
-                    Id = x.Id,
-                    ImagePath = x.ImagePath,
-                    UserName = x.UserName,
-                    Name = x.Name
-                },
-                expression: x => followers.Contains(x.Id),
-                include: x => x.Include(x => x.Followers),
-                pageIndex: pageIndex
-                );
-            return followerList;
+            return user;
         }
-
         public async Task<List<FollowListVM>> UsersFollowings(int id, int pageIndex)
         {
-            List<int> following = await _followService.Followings(id);
 
-            var followingList = await _unitOfWork.AppUserRepository.GetFilteredList(
-                selector: x => new FollowListVM
+            List<int> followings = await _followService.Followings(id);
+
+            var followingsList = await _unitOfWork.AppUserRepository.GetFilteredList(selector: y => new FollowListVM
+            {
+                Id = y.Id,
+                ImagePath = y.ImagePath,
+                UserName = y.UserName,
+                Name = y.Name,
+            },
+                expression: x => followings.Contains(x.Id),
+                include: x => x
+               .Include(z => z.Followers),
+                pageIndex: pageIndex);
+            return followingsList;
+
+        }
+        public async Task<List<FollowListVM>> UsersFollowers(int id, int pageIndex)
+        {
+
+            List<int> followers = await _followService.Followers(id);
+
+            var followersList = await _unitOfWork.AppUserRepository.GetFilteredList(selector: y => new FollowListVM
+            {
+                Id = y.Id,
+                ImagePath = y.ImagePath,
+                UserName = y.UserName,
+                Name = y.Name,
+            },
+                expression: x => followers.Contains(x.Id),
+                include: x => x
+               .Include(z => z.Followers),
+                pageIndex: pageIndex);
+            return followersList;
+
+        }
+        public async Task<List<SearchUserDTO>> SearchUser(string keyword, int pageIndex)
+        {
+            var users = await _unitOfWork.AppUserRepository.GetFilteredList(
+                selector: x => new SearchUserDTO
                 {
                     Id = x.Id,
-                    ImagePath = x.ImagePath,
+                    Name = x.Name,
                     UserName = x.UserName,
-                    Name = x.Name
+                    ImagePath = x.ImagePath
                 },
-                expression: x => following.Contains(x.Id),
-                include: x => x.Include(x => x.Followers),
-                pageIndex: pageIndex
-                );
-            return followingList;
+                expression: x => x.UserName.Contains(keyword) || x.Name.Contains(keyword),
+                pageIndex: pageIndex, pageSize: 10);
 
+            return users;
         }
     }
 }

@@ -16,10 +16,14 @@ namespace TwitterProject.Application.Mapper
             CreateMap<AppUser, EditProfileDTO>().ReverseMap();
             CreateMap<AppUser, ProfileSummaryDTO>().ReverseMap();
 
+
             CreateMap<Follow, FollowDTO>().ReverseMap();
             CreateMap<Like, LikeDTO>().ReverseMap();
+            CreateMap<Tweet, AddTweetDTO>().ReverseMap();
+
 
             CreateMap<Mention, AddMentionDTO>().ReverseMap();
+
         }
     }
 }
