@@ -9,12 +9,10 @@ namespace TwitterProject.Presentation.Models.ViewComponents
 {
     public class ProfileSummary: ViewComponent
     {
-        private readonly IAppUserService _userService;
-        public ProfileSummary(IAppUserService appUserService) => _userService = appUserService;
+        private readonly IAppUserService _appUserService;
 
-        //[Route("/ProfileSummary/", Name = "ProfileSummary")]
-        public async Task<IViewComponentResult> InvokeAsync(string userName) => View(await _userService.GetByUserName(userName));
+        public ProfileSummary(IAppUserService appUserService) => this._appUserService = appUserService;
+
+        public async Task<IViewComponentResult> InvokeAsync(string userName) => View(await _appUserService.GetByUserName(userName));
     }
 }
-//[Route("/Speaker/EvaluationsCurrent",
-//Name = "speakerevalscurrent")]

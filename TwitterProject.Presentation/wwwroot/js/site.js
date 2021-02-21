@@ -49,7 +49,6 @@ $(document).ready(function () {
                     $("#tweetValidation").addClass("alert alert-success").text("Send Successfully..!");
                     $("#tweetValidation").alert();
                     $("#tweetValidation").fadeOut(2000, 2000).slideDown(800, function () { });
-                    loadTweetList(pageIndex, userName)
                 }
                 else {
                     $("#tweetValidation").addClass("alert alert-danger").text("Error Occured..!");
@@ -95,9 +94,13 @@ function loadTweetList(pageIndex, userName) {
             }
 
         },
-        //error: function (result) {
-
-        //}
+        error: function (result) {
+            console.log(result);
+            $("#tweetValidation").addClass("alert alert-danger").text(result.responseText);
+            $("#tweetValidation").alert();
+            $("#tweetValidation").fadeTo(3000, 3000).slideUp(2000, function () {
+            });
+        }
     });
 
 }
@@ -107,3 +110,4 @@ function keypress(e) {
         document.getElementById('searchform').submit()
     }
 }
+

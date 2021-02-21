@@ -1,18 +1,17 @@
 ﻿
 $(document).ready(function () {
 	var pageIndex = 1;
-	if (typeof userName == null) {
+	if (typeof userName === 'undefined') {
 		userName = null;
-		alert(userName);
 	}
 	console.log(userName)
 	loadTweetList(pageIndex, userName);
 	$(window).scroll(function () {
 		if ($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
 			pageIndex = pageIndex + 1;
-			loadTweetList(pageIndex, userName)
+			loadTweetList(pageIndex, userName);
 		}
-	})
+	});
 })
 
 
@@ -25,7 +24,7 @@ function loadTweetList(pageIndex, userName) {
 		data: { pageIndex: pageIndex, userName: userName },
 		success: function (result) {
 			var html = "";
-			if (result == "Success") {
+			if (result.length != 0) {
 				$.each(result, function (key, item) {
 					if (item.ImagePath == null) {
 						html += '<li id="tweet_' + item.Id + '"><img src="' + item.UserImage + '"><a href="/profile/' + item.UserName + '">' + item.Name + '</a></br><p class="text-dark">' + item.Text + '</p></li>';
@@ -43,11 +42,14 @@ function loadTweetList(pageIndex, userName) {
 					$("#TweetList").append(html);
 				}
 			}
+			else {
+				$(window).unbind('scroll');
+			}
 
 		},
-		//error: function (result) {
-
-		//}
+		error: function (errormessage) {
+			$('#TweetsList').html('<li><p class="text-center">There were no results found</p></li>');
+			$(window).unbind('scroll');
+		}
 	});
-
 }
