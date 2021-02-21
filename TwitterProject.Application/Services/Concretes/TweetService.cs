@@ -120,6 +120,45 @@ namespace TwitterProject.Application.Services.Concretes
 
             return tweets;
         }
+
+        public async Task<TweetDetailVm> TweetDetail(int id, int userId)
+        {
+            var tweet = await _unitOfWork.TweetRepository.GetFilteredFirstOrDefault(
+                selector: y => new TweetDetailVm
+                {
+                    Id = y.Id,
+                    Text = y.Text,
+                    ImagePath = y.ImagePath,
+                    AppUserId = y.AppUserId,
+                    LikesCount = y.Likes.Count,
+                    MentionsCount = y.Mentions.Count,
+                    SharesCount = y.Shares.Count,
+                    CreateDate = y.CreateDate,
+                    UserName = y.AppUser.Name,
+                    UserImage = y.AppUser.ImagePath,
+                    Name = y.AppUser.Name,
+                    Mentions = y.Mentions.Where(z => z.TweetId == y.Id).OrderByDescending(z => z.CreateDate).Select(x => new MentionDto
+                    {
+                        Id = x.Id,
+                        Text = x.Text,
+                        AppUserId = x.AppUserId,
+                        UserName = x.AppUser.UserName,
+                        Name = x.AppUser.Name,
+                        TweetId = x.TweetId,
+                        CreateDate = x.CreateDate,
+                        UserImage = x.AppUser.ImagePath
+                    }).ToList(),
+                    isLiked = y.Likes.Any(z => z.AppUserId == userId)
+                },
+                orderby: z => z.OrderByDescending(x => x.CreateDate),
+                expression: x => x.Id == id,
+                include: x => x
+               .Include(z => z.AppUser)
+               .ThenInclude(z => z.Followers)
+               .Include(z => z.Likes));
+
+            return tweet;
+        }
     }
 
 }

@@ -11,14 +11,14 @@ using TwitterProject.Application.Services.Interfaces;
 
 namespace TwitterProject.Presentation.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAppUserService _userServeice;
 
         public AccountController(IAppUserService appUserService) => _userServeice = appUserService;
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         #region Registration
         public IActionResult Register()
         {
@@ -43,7 +43,7 @@ namespace TwitterProject.Presentation.Controllers
         #endregion
 
         #region Login
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
             if (User.Identity.IsAuthenticated) return RedirectToAction(nameof(HomeController.Index), "Home");

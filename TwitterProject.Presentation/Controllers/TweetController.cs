@@ -40,6 +40,6 @@ namespace TwitterProject.Presentation.Controllers
             else return Json(await _tweetService.UserTweets(userName, pageIndex));
         }
 
-
+        public async Task<IActionResult> TweetDetail(int id) => View(await _tweetService.TweetDetail(id, User.GetUserId()));
     }
 }

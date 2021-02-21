@@ -6,7 +6,7 @@ using TwitterProject.Domain.Repositories.EntityTypeRepo;
 
 namespace TwitterProject.Domain.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IAsyncDisposable
     {
         IAppUserRepository AppUserRepository { get; }
         IFollowRepository FollowRepository { get; }

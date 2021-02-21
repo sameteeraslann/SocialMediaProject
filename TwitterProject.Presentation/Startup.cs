@@ -61,9 +61,9 @@ namespace TwitterProject.Presentation
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                       name: "profile",
-                       pattern: "{profile}/{userName}",
-                       defaults: new { controller = "Profile", action = "Details" });
+                    name: "profile",
+                    pattern: "{profile}/{userName}",
+                    defaults: new { controller = "Profile", action = "Details" });
 
                 endpoints.MapControllerRoute(
                     name: "default",

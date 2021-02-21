@@ -13,5 +13,6 @@ namespace TwitterProject.Application.Services.Interfaces
         Task AddTweet(AddTweetDTO addTweetDTO);
         Task<List<TimeLineVM>> UserTweets(string userName, int pageIndex);
         Task DeleteTweet(int id, int userId);
+        Task<TweetDetailVm> TweetDetail(int id, int userId);
     }
 }
